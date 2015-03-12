@@ -1,3 +1,4 @@
+set nu
 set clipboard=unnamed
 
 "For eclim to work properly
