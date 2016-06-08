@@ -5,7 +5,7 @@
 "    * vim-airline - cool layout of windows
 "    * vim-colorschemes - more colors
 "    * nerdtree - folder layout
-"    * vim-gutter - show git changes
+"    * vim-gitgutter - show git changes
 "    * vim-go - golang plugin
 "    * vim-fugitive
 "    * YankRing
