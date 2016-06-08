@@ -1,3 +1,17 @@
+"
+"  Installation 
+"    * pathogen - easier installation of plugins
+"    * syntastic - syntax highlighting / linter
+"    * vim-airline - cool layout of windows
+"    * vim-colorschemes - more colors
+"    * nerdtree - folder layout
+"    * vim-gutter - show git changes
+"    * vim-go - golang plugin
+"    * vim-fugitive
+"    * YankRing
+"    * gundo - git undo
+"
+
 set nu
 set clipboard=unnamed
 
@@ -7,7 +21,7 @@ set shell=/bin/sh
 " http://eclim.org/install.html
 set nocompatible
 
-"set nowrap
+set nowrap
 
 set noswapfile
 
@@ -43,8 +57,9 @@ set showmode
 set pastetoggle=<F1>
 
 " NERDtree - http://vim.sourceforge.net/scripts/script.php?script_id=1658
- nnoremap <silent> <F5> :NERDTreeToggle<CR>
- autocmd vimenter * NERDTree
+nnoremap <silent> <F5> :NERDTreeToggle<CR>
+autocmd vimenter * NERDTree | sleep 1m | :wincmd l | :only
+" autocmd vimenter * NERDTree
  " let NERDTreeShowBookmarks=1
 
  " Gundo - http://sjl.bitbucket.org/gundo.vim/
@@ -89,7 +104,7 @@ set completeopt=longest,menuone
 
 "let g:solarized_termcolors=256
 set background=light
-colorscheme tomorrow
+colorscheme hybrid-light
 
 " go vim
 let g:go_metalinter_autosave = 1
