@@ -5,7 +5,7 @@
 "    * vim-airline - cool layout of windows
 "    * vim-colorschemes - more colors
 "    * nerdtree - folder layout
-"    * vim-gitgutter - show git changes
+"    * vim-gutter - show git changes
 "    * vim-go - golang plugin
 "    * vim-fugitive
 "    * YankRing
@@ -72,7 +72,11 @@ nmap <C-k> <C-w>k
 nmap <C-j> <C-w>j 
 
 " syntastic
-let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_checkers = ['eslint'] "Use eslint for syntax checking
+" Point syntastic checker at locally installed `eslint` if it exists.
+if executable('node_modules/.bin/eslint')
+	let b:syntastic_javascript_eslint_exec = getcwd()."/node_modules/.bin/eslint"
+endif
 let g:syntastic_go_checkers = ['golint', 'govet', 'errchk']
 let g:syntastic_mode_map = { 'mode' : 'active', 'passive_filetypes' : ['go']}
 let g:sysntastic_html_checkers = []
@@ -80,6 +84,7 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
+"let g:syntastic_debug = 33
 
 let vim_markdown_preview_hotkey='<F6>'
 
@@ -104,7 +109,7 @@ set completeopt=longest,menuone
 
 "let g:solarized_termcolors=256
 set background=light
-colorscheme hybrid-light
+colorscheme hybrid
 
 " go vim
 let g:go_metalinter_autosave = 1
