@@ -1,5 +1,6 @@
 "
 "  Installation 
+"    * Make sure to do brew install override the system-vi
 "    * pathogen - easier installation of plugins
 "    * syntastic - syntax highlighting / linter
 "    * vim-airline - cool layout of windows
@@ -7,6 +8,9 @@
 "    * nerdtree - folder layout
 "    * vim-gutter - show git changes
 "    * vim-go - golang plugin
+"    * shougo/deoplete
+"    * roxma/nvim-yarp
+"    * roxma/vim-hug-neovim-rpc
 "    * vim-fugitive
 "    * YankRing
 "    * gundo - git undo
@@ -40,7 +44,6 @@ syntax on
 " set smarttab        " A <Tab> in front of a line inserts blanks according to
 " 'shiftwidth'.  'tabstop' or 'softtabstop' is used in other places.  A <BS>
 " will delete a 'shiftwidth' worth of space at the start of the line.
-
 
 filetype plugin indent on
 
@@ -86,12 +89,51 @@ let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 "let g:syntastic_debug = 33
 
-let vim_markdown_preview_hotkey='<F6>'
+"let vim_markdown_preview_hotkey='<F6>'
+"let vim_markdown_preview_browser='Google Chrome'
+
+nnoremap <leader>t :Typora<CR>
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+
+let g:deoplete#enable_smart_case = 1
+let g:deoplete#sources#syntax#min_keyword_length = 3
 
 " Airline
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='papercolor'
+let g:airline#extensions#sysntastic#enabled = 1
+let g:airline_theme='murmur'
+nnoremap <Tab> :bnext<CR>
+nnoremap <S-Tab> :bprevious<CR>
+nnoremap <C-X> :bdelete<CR>
+
+" ctrlp.vim
+nmap <leader>f :CtrlPBuffer<CR>
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+"
+"
+"" old vim-powerline symbols
+if !exists('g:airline_symbols')
+        let g:airline_symbols = {}
+endif
+let g:airline_left_sep = '⮀'
+let g:airline_left_alt_sep = '⮁'
+let g:airline_right_sep = '⮂'
+let g:airline_right_alt_sep = '⮃'
+let g:airline_symbols.branch = '⭠'
+let g:airline_symbols.readonly = '⭤'
+let g:airline_symbols.linenr = '⭡'
+
 set laststatus=2
 set noruler
 
@@ -108,7 +150,7 @@ set omnifunc=syntaxcomplete#Complete
 set completeopt=longest,menuone
 
 "let g:solarized_termcolors=256
-set background=light
+"set background=light
 colorscheme hybrid
 
 " go vim
@@ -116,4 +158,28 @@ let g:go_metalinter_autosave = 1
 au FileType go nmap <leader>b <Plug>(go-build)
 au FileType go nmap <leader>c <Plug>(go-coverage)
 au FileType go nmap <leader>t <Plug>(go-test)
+
+nnoremap <leader>r :source $MYVIMRC<CR>
+
+"remove trailing whitespace for specific files
+autocmd BufWritePre *.md %s/\s\+$//e
+
+" grep override
+" The Silver Searcher
+if executable('ag')
+    " Use ag over grep
+    set grepprg=ag\ --nogroup\ --nocolor
+
+    " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+    " ag is fast enough that CtrlP doesn't need to cache
+    let g:ctrlp_use_caching = 0
+
+	" bind K to grep word under cursor
+    nnoremap <leader>k :Ack! "\b<C-R><C-W>\b"<CR>:cw<CR>
+    let g:ackprg = 'ag --vimgrep'
+    cnoreabbrev Ack Ack!
+    nnoremap <Leader>a :Ack!<Space>
+endif
 
