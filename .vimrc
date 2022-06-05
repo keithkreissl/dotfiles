@@ -22,7 +22,7 @@ call plug#begin()
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
     Plug 'rafi/awesome-vim-colorschemes'
-    Plug 'tpope/vim-unimpaired'
+    Plug 'vim-syntastic/syntastic'
     Plug 'rking/ag.vim'
 call plug#end()
 
